@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
 # WeLikeCode 
 # Check for python ...
+# bin/detect <build-dir>
+
+# Fail fast and fail hard.
+set -eo pipefail
+
+# debug
+set -x
 
 BUILD_DIR=$1
 
-# Exit early if app is clearly not Python.
+echo "Build dir $BUILD_DIR"
+
 if [ ! -f "$BUILD_DIR/requirements.txt" ] && [ ! -f "$BUILD_DIR/setup.py" ] && [ ! -f "$BUILD_DIR/Pipfile" ]; then
+  echo "Could not find requirements.txt">&2
   exit 1
+else
+  echo "Found a requirements file"
+  exit 0
 fi
 
-echo Python
+echo Python2

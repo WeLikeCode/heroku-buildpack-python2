@@ -109,7 +109,7 @@ elif [ "$STACK" = "heroku-22" ]; then
 fi
 
 topic "Fetching .debs for python 2 "
-apt-get $APT_OPTIONS -y $APT_FORCE_YES -d install --reinstall python2-dev | indent
+apt-get $APT_OPTIONS -y $APT_FORCE_YES -d install --reinstall libpython2-dev libpython2.7 libpython2.7-dev python2-dev python2.7-dev | indent
 
 mkdir -p $BUILD_DIR/.apt
 
@@ -148,7 +148,7 @@ topic "Getting pip for python 2 "
 curl -sSL  https://bootstrap.pypa.io/pip/2.7/get-pip.py  -o $CACHE_DIR/get-pip.py
 
 topic "Installing pip for python 2"
-python2 $CACHE_DIR/get-pip.py
+python2.7 $CACHE_DIR/get-pip.py
 
 topic "Installing requirements"
-python2 -m pip install -r "$BUILD_DIR/requirements.txt"
+python2.7 -m pip install -r "$BUILD_DIR/requirements.txt"

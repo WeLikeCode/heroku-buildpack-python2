@@ -69,13 +69,13 @@ else
   mkdir -p "$APT_CACHE_DIR/archives/partial"
   mkdir -p "$APT_STATE_DIR/lists/partial"
   mkdir -p "$APT_SOURCELIST_DIR"   # make dir for sources
-  cp -f "$BUILD_DIR/Aptfile" "$APT_CACHE_DIR/Aptfile"
+  #cp -f "$BUILD_DIR/Aptfile" "$APT_CACHE_DIR/Aptfile"
   cat "/etc/apt/sources.list" > "$APT_SOURCES"    # no cp here
   # add custom repositories from Aptfile to sources.list
   # like>>    :repo:deb http://cz.archive.ubuntu.com/ubuntu artful main universe
   if grep -q -e "^:repo:" $BUILD_DIR/Aptfile; then
     topic "Adding custom repositories"
-    cat $BUILD_DIR/Aptfile | grep -s -e "^:repo:" | sed 's/^:repo:\(.*\)\s*$/\1/g' >> $APT_SOURCES
+    #cat $BUILD_DIR/Aptfile | grep -s -e "^:repo:" | sed 's/^:repo:\(.*\)\s*$/\1/g' >> $APT_SOURCES
   fi
 fi
 
@@ -145,10 +145,10 @@ topic "Rewrite package-config files"
 find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='"$BUILD_DIR"'/.apt\1!g'
 
 topic "Getting pip for python 2 "
-curl -sSL  https://bootstrap.pypa.io/pip/2.7/get-pip.py  -o $BUILD_DIR/get-pip.py
+curl -sSL  https://bootstrap.pypa.io/pip/2.7/get-pip.py  -o $CACHE_DIR/get-pip.py
 
 topic "Installing pip for python 2"
-python2 $BUILD_DIR/get-pip.py
+python2 $CACHE_DIR/get-pip.py
 
 topic "Installing requirements"
 python2 -m pip install -r "$BUILD_DIR/requirements.txt"
